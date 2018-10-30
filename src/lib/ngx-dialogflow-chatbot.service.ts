@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ApiAiClient } from 'api-ai-javascript';
 import { Message } from './ngx-dialogflow-chatbot-message';
 
@@ -12,8 +12,6 @@ export class NgxDialogflowChatbotService {
   private client: any;
   private bot: string;
   private user: string;
-  
-  public uiUpdate = new Subject<void>();
 
   public conversation = new BehaviorSubject<Message[]>([]);
 
@@ -27,26 +25,19 @@ export class NgxDialogflowChatbotService {
 
   converse(msg: string) {
 
-    const userMessage = new Message(msg, this.user, 'user');
-    this.update(userMessage);
+    this.conversation.next([new Message(msg, this.user, 'user')]);
     let respMessage = new Message('...', this.bot, 'bot');
-    this.update(respMessage);
+    this.conversation.next([respMessage]);
 
     if (this.client && this.client.textRequest) {
       return this.client.textRequest(msg)
         .then(res => {
-          const speech = res.result.fulfillment.speech;
-          respMessage.content = speech;
-          this.uiUpdate.next();
+          respMessage.content = res.result.fulfillment.speech;
         });
     }
     else {
       respMessage.content = "DialogFlow API Client is not initialized";
     }
-  }
-
-  private update(msg: Message) {
-    this.conversation.next([msg]);
   }
 
 }

@@ -1,4 +1,4 @@
-# Angular 2+ DialogFlow ChatBot - Library
+# Angular 2+ DialogFlow ChatBot - Out Of Box Library
 
 ## Installation
 

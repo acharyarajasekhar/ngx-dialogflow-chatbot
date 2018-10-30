@@ -3,7 +3,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'chatbot-footer',
     template: `
-<nav class="navbar navbar-dark bg-dark mt-5 fixed-bottom no-padding">
+<nav class="navbar navbar-dark bg-dark no-padding">
   <div class="message-input">
       <div class="wrap">
           <input type="text" [(ngModel)]="message" placeholder="Write your message..." (keydown.enter)="onEnter($event)">
@@ -12,7 +12,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
   </div>
 </nav>`,
     styles: [
-        `.message-input {
+        `
+  .message-input {
       width: 100%;
   }
   
@@ -29,6 +30,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
       font-size: 0.8em;
       color: #32465a;
       border-top: 1px solid lightgray;
+      border-left: 1px solid lightgray;
+      border-bottom: 1px solid lightgray;
   }
   
   .message-input .wrap button {
